@@ -1,5 +1,6 @@
 import argparse
 import time
+import datetime
 
 import torch
 import torch.nn as nn
@@ -177,3 +178,8 @@ def main():
             losses.update(loss.data.item(), image.size(0))
             loss.backward()
             optimizer.step()
+
+            # Measure elapsed time
+            batch_time.update(time.time() - end)
+            end = time.time()
+            eta = str(datetime.timedelta(seconds=int(batch_time.val*(num_trainloader-idx))))
