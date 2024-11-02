@@ -20,3 +20,6 @@ class AverageMeter(object):
         self.sum += val * n
         self.count += n
         self.avg = self.sum / self.count
+
+def colorize(value, vmin=10, vmax=1000, cmap='plasma'):
+    
