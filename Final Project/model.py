@@ -28,4 +28,14 @@ class Encoder(nn.Module):
 
 class Decoder(nn.Module):
     def __init__(self, num_features:int=1664, decoder_width:float=1.0) -> None:
-        
+        super(Decoder, self).__init__()
+        features = int(num_features * decoder_width)
+
+        self.conv2 = nn.Conv2d(num_features, features, kernel_size=1, stride=1, padding=0)
+
+        self.up1 = UpSample(skip_input=features//1 + 256, output_features=features//2)
+        self.up2 = UpSample(skip_input=features//2 + 128, output_features=features//4)
+        self.up3 = UpSample(skip_input=features//4 + 64, output_features=features//8)
+        self.up4 = UpSample(skip_input=features//8 + 64, output_features=features//16)
+
+        self.conv3 = nn.Conv2d(features//16, 1, kernel_size=3, stride=1, padding=1)
