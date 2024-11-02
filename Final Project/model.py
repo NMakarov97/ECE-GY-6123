@@ -25,3 +25,6 @@ class Encoder(nn.Module):
         for key, value in self.original_model.features._modules.items():
             features.append(value(features[-1]))
         return features
+
+class Decoder(nn.Module):
+    
