@@ -16,3 +16,11 @@ def create_window(window_size, channel=1):
     _2D_window = _1D_window.mm(_1D_window.t()).float().unsqueeze(0).unsqueeze(0)
     window = _2D_window.expand(channel, 1, window_size, window_size).contiguous()
     return window
+
+def ssim(img1, img2, val_range, window_size=11, window=None, size_average=True, full=False):
+    L = val_range
+    padd = 0
+
+    (_, channel, height, width) = img1.size()
+    if window is None:
+        real_size = min(window_size, height, width)
