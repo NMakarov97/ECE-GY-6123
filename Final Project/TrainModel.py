@@ -1,5 +1,7 @@
 import argparse
 
+from data import getTrainingTestingData
+
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser(description='High Quality Monocular Depth Estimation via Transfer Learning')
@@ -18,7 +20,8 @@ def main():
         help='initial learning rate'
         )
     parser.add_argument(
-        '--bs',
+        '--batch',
+        '-b',
         default=8,
         type=int,
         help='batch size'
@@ -72,3 +75,10 @@ def main():
         help='location to save checkpoints in'
     )
     args = parser.parse_args()
+
+    # Load data
+    print('Loading data...')
+    trainloader, testloader = getTrainingTestingData(args.data, batch_size=args.batch)
+    num_trainloader = len(trainloader)
+    num_testloader = len(testloader)
+    print('Data loaders ready!')
