@@ -1,6 +1,7 @@
 import argparse
 import time
 import datetime
+import os.path
 
 import torch
 import torch.nn as nn
@@ -200,3 +201,22 @@ def main():
             del image
             del depth
             del output
+
+        # Save checkpoints
+        if epoch % 1 == 0:
+            print(
+                '----------------------------------\n'
+                f'Epoch: #{epoch}, Avg. Net Loss: {losses.avg:.4f}\n'
+                '----------------------------------'
+            )
+            torch.save(
+                {
+                    'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optim_state_dict': optimizer.state_dict(),
+                    'loss': losses.avg
+                },
+                os.path.join(args.save, f'ckpt_{epoch}_{int(losses.avg * 100)}.pth')
+            )
+            LogProgress(model, writer, testloader, num_iters, device)
+            writer.add_scalar('Train/Loss.avg', losses.avg, epoch)
