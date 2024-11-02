@@ -52,3 +52,28 @@ def load_from_checkpoint(ckpt, model, optimizer, epochs, loss_meter=None):
     optimizer.load_state_dict(checkpoint['optim_state_dict'])
 
     return model, optimizer, ckpt_epoch
+
+def init_or_load_model(depthmodel, enc_pretrain, epochs, lr, ckpt=None, device=torch.device('cuda:0'), loss_meter=None):
+    
+    if ckpt is not None:
+        checkpoint = torch.load(ckpt)
+    
+    model = depthmodel(encoder_pretrained=enc_pretrain)
+
+    if ckpt is not None:
+        model.load_state_dict(checkpoint['model_state_dict'])
+
+    model = model.to(device)
+
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+    if ckpt is not None:
+        optimizer.load_state_dict(checkpoint['optim_state_dict'])
+    
+    start_epoch = 0
+    if ckpt is not None:
+        start_epoch = checkpoint['epoch'] + 1
+        if start_epoch <= 0:
+            raise ValueError(f'Epochs provided: {epochs}, epochs completed in checkpoint: {checkpoint['epoch'] + 1}')
+
+    return model, optimizer, start_epoch
