@@ -85,3 +85,22 @@ class depthDatasetMemory(Dataset):
     
     def __len__(self):
         return len(self.nyu_dataset)
+
+class ToTensor(object):
+    def __init__(self, is_test=False):
+        self.is_test = is_test
+
+    def __call__(self, sample):
+        image, depth = sample['image'], sample['depth']
+
+        image = self.to_tensor(image)
+
+        depth = depth.resize((320, 240))
+
+        if self.is_test:
+            depth = self.to_tensor(depth).float() / 1000
+        else:
+            depth = self.to_tensor(depth).float() * 1000
+
+        depth = torch.clamp(depth, 10, 1000)
+        return {'image': image, 'depth': depth}
