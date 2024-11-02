@@ -1,5 +1,6 @@
 import matplotlib
 import matplotlib.cm as cm
+import torch
 
 def DepthNorm(depth:float, maxDepth:float=1000.0) -> float:
     return maxDepth / depth
@@ -38,3 +39,16 @@ def colorize(value, vmin=10, vmax=1000, cmap='plasma'):
     img = value[:,:,:3]
 
     return img.transpose((2,0,1))
+
+def load_from_checkpoint(ckpt, model, optimizer, epochs, loss_meter=None):
+    checkpoint = torch.load(ckpt)
+    ckpt_epoch = epochs - (checkpoint['epoch'] + 1)
+    if ckpt_epoch <= 0:
+        raise ValueError(
+            f'Epochs provided: {epochs}, epochs completed in checkpoint: {checkpoint['epoch'] + 1}'
+        )
+    
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optim_state_dict'])
+
+    return model, optimizer, ckpt_epoch
