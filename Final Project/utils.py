@@ -1,6 +1,8 @@
 import matplotlib
 import matplotlib.cm as cm
 import torch
+import numpy as np
+from PIL import Image
 
 def DepthNorm(depth:float, maxDepth:float=1000.0) -> float:
     return maxDepth / depth
@@ -77,3 +79,10 @@ def init_or_load_model(depthmodel, enc_pretrain, epochs, lr, ckpt=None, device=t
             raise ValueError(f'Epochs provided: {epochs}, epochs completed in checkpoint: {checkpoint['epoch'] + 1}')
 
     return model, optimizer, start_epoch
+
+def load_images(image_files):
+    loaded_images = []
+    for file in image_files:
+        x = np.clip(np.asarray(Image.open(file).resize((640,480)), dtype=float) / 255, 0, 1).transpose(2, 0, 1)
+        loaded_images.append(x)
+    return np.stack(loaded_images, axis=0)
