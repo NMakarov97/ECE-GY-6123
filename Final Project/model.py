@@ -54,3 +54,9 @@ class Decoder(nn.Module):
         x_d4 = self.up4(x_d3, x_block0)
 
         return self.conv3(x_d4)
+
+class DenseDepth(nn.Module):
+    def __init__(self, pretrained:bool=True):
+        super(DenseDepth, self).__init__()
+        self.encoder = Encoder(pretrained)
+        self.decoder = Decoder()
