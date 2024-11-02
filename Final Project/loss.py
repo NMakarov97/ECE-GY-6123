@@ -42,4 +42,6 @@ def ssim(img1, img2, val_range, window_size=11, window=None, size_average=True, 
     sigma2_sq = F.conv2d(img2 * img2, window, padding=padd, groups=channel) - mu2_sq
     sigma12 = F.conv2d(img1 * img2, window, padding=padd, groups=channel) - mu1_mu2
 
-    
+    v1 = 2.0 * sigma12 + C2
+    v2 = sigma1_sq + sigma2_sq + C2
+    cs = torch.mean(v1 / v2)
