@@ -271,3 +271,6 @@ def LogProgress(model, writer, test_loader, epoch, device):
     del image
     del depth
     del output
+
+if __name__ == '__main__':
+    main()
