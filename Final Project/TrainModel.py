@@ -183,3 +183,20 @@ def main():
             batch_time.update(time.time() - end)
             end = time.time()
             eta = str(datetime.timedelta(seconds=int(batch_time.val*(num_trainloader-idx))))
+
+            # Log progress
+            num_iters = epoch * num_trainloader + idx
+            if idx % 5 == 0:
+                # Print status to console
+                print(
+                    f'Epoch: #{epoch} Batch: {idx}/{num_trainloader}\t'
+                    f'Time (current/total) {batch_time.val:.3f}/{batch_time.sum:.3f}\t'
+                    f'eta {eta}\t'
+                    f'Loss (current/average) {losses.val:.4f}/{losses.avg:.4f}\t'
+                )
+                writer.add_scalar('Train/Loss', losses.val, num_iters)
+
+            # Delete resources
+            del image
+            del depth
+            del output
