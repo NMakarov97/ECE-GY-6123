@@ -172,3 +172,8 @@ def main():
                 max=1
             )
             loss = (1.0 * ssim_loss) + (0.1 * l1_loss)
+
+            # Update step
+            losses.update(loss.data.item(), image.size(0))
+            loss.backward()
+            optimizer.step()
