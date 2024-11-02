@@ -253,3 +253,21 @@ def LogProgress(model, writer, test_loader, epoch, device):
             colorize(vision_utils.make_grid(depth.data, nrow=6, normalize=False)),
             epoch
         )
+
+    output = DepthNorm(model(image))
+
+    writer.add_image(
+        'Train.3.Ours',
+        colorize(vision_utils.make_grid(output.data, nrow=6, normalize=False)),
+        epoch
+    )
+    writer.add_image(
+        'Train.4.Diff',
+        colorize(vision_utils.make_grid(torch.abs(output - depth).data, nrow=6, normalize=False)),
+        epoch
+    )
+
+    # Delete resources
+    del image
+    del depth
+    del output
