@@ -1,4 +1,5 @@
 import argparse
+import time
 
 import torch
 import torch.nn as nn
@@ -133,3 +134,20 @@ def main():
 
     # Loss functions
     l1_criterion = nn.L1Loss()
+
+    # Start training
+    print(f'Device: {device}')
+    print('Starting training...')
+
+    for epoch in range(start_epoch, args.epochs):
+        # Set up averaging
+        batch_time = AverageMeter()
+        losses = AverageMeter()
+
+        # Switch to train mode
+        model.train()
+        model = model.to(device)
+        epoch_start = time.time()
+        end = time.time()
+
+        
