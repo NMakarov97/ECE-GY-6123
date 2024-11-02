@@ -136,3 +136,8 @@ class ToTensor(object):
             return img.float().div(255)
         else:
             return img
+
+def getNoTransform(is_test=False):
+    return transforms.Compose([
+        ToTensor(is_test=is_test)
+    ])
