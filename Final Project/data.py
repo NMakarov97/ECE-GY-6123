@@ -4,6 +4,7 @@ import torch
 from PIL import Image
 import numpy as np
 import random
+from io import BytesIO
 
 def _is_pil_image(img) -> bool:
     return isinstance(img, Image.Image)
@@ -67,3 +68,20 @@ def loadZipToMem(zip_file:str):
     if nyu2_train:
         print(f'Loaded {len(nyu2_train)}')
     return data, nyu2_train
+
+class depthDatasetMemory(Dataset):
+    def __init__(self, data, nyu2_train, transform=None):
+        self.data, self.nyu_dataset = data, nyu2_train
+        self.transform = transform
+
+    def __getitem__(self, idx):
+        sample = self.nyu_dataset[idx]
+        image = Image.open(BytesIO(self.data[sample[0]]))
+        depth = Image.open(BytesIO(self.data[sample[1]]))
+        sample = {'image': image, 'depth': depth}
+        if self.transform:
+            sample = self.transform(sample)
+        return sample
+    
+    def __len__(self):
+        return len(self.nyu_dataset)
