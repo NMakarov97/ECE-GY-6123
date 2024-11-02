@@ -148,3 +148,13 @@ def getDefaultTrainTransform():
         RandomChannelSwap(0.5),
         ToTensor()
     ])
+
+def getTrainingTestingData(path, batch_size):
+    data, nyu2_train = loadZipToMem(path)
+    transformed_training = depthDatasetMemory(
+        data, nyu2_train, transform=getDefaultTrainTransform()
+    )
+    transformed_testing = depthDatasetMemory(
+        data, nyu2_train, transform=getNoTransform()
+    )
+    return DataLoader(transformed_training, batch_size, shuffle=True), DataLoader(transformed_testing, batch_size, shuffle=False)
