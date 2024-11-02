@@ -7,6 +7,8 @@ import torch.optim as optim
 import torchvision.utils as vision_utils
 
 from data import getTrainingTestingData
+from model import DenseDepth
+from utils import AverageMeter, DepthNorm, colorize, load_from_checkpoint, init_or_load_model
 
 def main():
     # Command line arguments
@@ -91,11 +93,23 @@ def main():
     epoch_loss = []
     batch_loss = []
     sum_loss = 0
-    data = args.data
 
     # Load data
     print('Loading data...')
-    trainloader, testloader = getTrainingTestingData(data, batch_size=batch_size)
+    trainloader, testloader = getTrainingTestingData(args.data, batch_size=batch_size)
     num_trainloader = len(trainloader)
     num_testloader = len(testloader)
     print('Data loaders ready!')
+
+    # Load from checkpoint if given
+    if len(args.checkpoint) > 0:
+        print('Loading from checkpoint...')
+        model, optimizer, start_epoch = init_or_load_model(
+            depthmodel=DenseDepth,
+            enc_pretrain=args.enc_pretrain,
+            epochs=args.epochs,
+            lr=args.lr,
+            ckpt=args.checkpoint,
+            device=device
+        )
+        print(f'Resuming from epoch #{start_epoch}')
