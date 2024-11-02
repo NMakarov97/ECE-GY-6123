@@ -27,4 +27,5 @@ class Encoder(nn.Module):
         return features
 
 class Decoder(nn.Module):
-    
+    def __init__(self, num_features:int=1664, decoder_width:float=1.0) -> None:
+        
