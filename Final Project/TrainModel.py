@@ -220,3 +220,14 @@ def main():
             )
             LogProgress(model, writer, testloader, num_iters, device)
             writer.add_scalar('Train/Loss.avg', losses.avg, epoch)
+
+        if epoch % 5 == 0:
+            torch.save(
+                {
+                    'epoch': epoch,
+                    'model_state_dict': model.cpu().state_dict(),
+                    'optim_state_dict': optimizer.state_dict(),
+                    'loss': losses.avg
+                },
+                os.path.join(args.save, f'ckpt_{epoch}_{int(losses.avg * 100)}.pth')
+            )
