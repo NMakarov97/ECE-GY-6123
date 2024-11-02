@@ -32,4 +32,10 @@ def colorize(value, vmin=10, vmax=1000, cmap='plasma'):
     else:
         # Avoid 0-division
         value = value*0.0
-    
+
+    cmapper = cm.get_cmap(cmap)
+    value = cmapper(value, bytes=True)
+
+    img = value[:,:,:3]
+
+    return img.transpose((2,0,1))
