@@ -159,3 +159,6 @@ def main():
 
             # Normalize depth
             normalized_depth = DepthNorm(depth)
+
+            # Predict
+            output = model(image)
