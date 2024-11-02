@@ -130,3 +130,6 @@ def main():
     writer = SummaryWriter(
         comment=f'{model_prefix}-learning_rate:{args.lr}-epoch:{args.epochs}-batch_size:{args.batch}'
     )
+
+    # Loss functions
+    l1_criterion = nn.L1Loss()
