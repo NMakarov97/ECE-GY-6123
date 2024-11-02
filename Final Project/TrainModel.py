@@ -10,6 +10,7 @@ from tensorboardX import SummaryWriter
 
 from data import getTrainingTestingData
 from model import DenseDepth
+from loss import ssim
 from utils import AverageMeter, DepthNorm, colorize, load_from_checkpoint, init_or_load_model
 
 def main():
@@ -162,3 +163,12 @@ def main():
 
             # Predict
             output = model(image)
+
+            # Compute loss
+            l1_loss = l1_criterion(output, normalized_depth)
+            ssim_loss = torch.clamp(
+                (1 - ssim(output, normalized_depth, 1000.0 / 10.0)) * 0.5,
+                min=0,
+                max=1
+            )
+            loss = (1.0 * ssim_loss) + (0.1 * l1_loss)
