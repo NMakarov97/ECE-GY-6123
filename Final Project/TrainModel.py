@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.nn.utils as utils
 import torch.optim as optim
 import torchvision.utils as vision_utils
+from tensorboardX import SummaryWriter
 
 from data import getTrainingTestingData
 from model import DenseDepth
@@ -124,3 +125,8 @@ def main():
             ckpt=None,
             device=device
         )
+
+    # Set up logging
+    writer = SummaryWriter(
+        comment=f'{model_prefix}-learning_rate:{args.lr}-epoch:{args.epochs}-batch_size:{args.batch}'
+    )
