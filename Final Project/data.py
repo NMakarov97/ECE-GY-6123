@@ -4,7 +4,6 @@ import torch
 from PIL import Image
 import numpy as np
 import random
-from itertools import permutations
 
 def _is_pil_image(img) -> bool:
     return isinstance(img, Image.Image)
@@ -29,6 +28,7 @@ class RandomHorizontalFlip(object):
 
 class RandomChannelSwap(object):
     def __init__(self, probability):
+        from itertools import permutations
         self.probability = probability
         self.indices = list(permutations(range(3), 3))
 
@@ -45,3 +45,25 @@ class RandomChannelSwap(object):
             image = Image.fromarray(image[...,list(self.indices[random.randint(0, len(self.indices) -1)])])
         
         return {'image': image, 'depth': depth}
+
+def loadZipToMem(zip_file:str):
+    from zipfile import ZipFile
+    from sklearn.utils import shuffle
+    # Load zip file to memory
+    print('Loading dataset from zip file...', end='')
+
+    input_zip = ZipFile(zip_file)
+    data = {name: input_zip.read(name) for name in input_zip.namelist()}
+    nyu2_train = list(
+        (
+            row.split(',')
+            for row in (data['data/nyu2_train.csv']).decode('utf-8').split('\n')
+            if len(row) > 0
+        )
+    )
+
+    nyu2_train = shuffle(nyu2_train, random_state=0)
+
+    if nyu2_train:
+        print(f'Loaded {len(nyu2_train)}')
+    return data, nyu2_train
