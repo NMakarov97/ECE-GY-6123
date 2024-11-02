@@ -150,4 +150,12 @@ def main():
         epoch_start = time.time()
         end = time.time()
 
-        
+        for idx, batch in enumerate(trainloader):
+            optimizer.zero_grad()
+
+            # Prepare sample and target
+            image = torch.Tensor(batch['image']).to(device)
+            depth = torch.Tensor(batch['depth']).to(device)
+
+            # Normalize depth
+            normalized_depth = DepthNorm(depth)
