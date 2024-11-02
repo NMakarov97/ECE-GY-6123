@@ -231,3 +231,9 @@ def main():
                 },
                 os.path.join(args.save, f'ckpt_{epoch}_{int(losses.avg * 100)}.pth')
             )
+
+def LogProgress(model, writer, test_loader, epoch, device):
+    # Log intermediate results
+    model.eval()
+    sequential = test_loader
+    sample_batched = next(iter(sequential))
