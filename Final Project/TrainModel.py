@@ -113,3 +113,14 @@ def main():
             device=device
         )
         print(f'Resuming from epoch #{start_epoch}')
+    # Initialize new model if no checkpoint present
+    else:
+        print('Initializing new model...')
+        model, optimizer, start_epoch = init_or_load_model(
+            depthmodel=DenseDepth,
+            enc_pretrain=args.enc_pretrain,
+            epochs=args.epochs,
+            lr=args.lr,
+            ckpt=None,
+            device=device
+        )
