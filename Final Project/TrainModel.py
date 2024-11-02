@@ -1,5 +1,11 @@
 import argparse
 
+import torch
+import torch.nn as nn
+import torch.nn.utils as utils
+import torch.optim as optim
+import torchvision.utils as vision_utils
+
 from data import getTrainingTestingData
 
 def main():
@@ -76,9 +82,20 @@ def main():
     )
     args = parser.parse_args()
 
+    # Set up various constants
+    batch_size = args.batch
+    model_prefix = 'DenseDepth_'
+    device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
+    theta = args.theta
+    save_count = 0
+    epoch_loss = []
+    batch_loss = []
+    sum_loss = 0
+    data = args.data
+
     # Load data
     print('Loading data...')
-    trainloader, testloader = getTrainingTestingData(args.data, batch_size=args.batch)
+    trainloader, testloader = getTrainingTestingData(data, batch_size=batch_size)
     num_trainloader = len(trainloader)
     num_testloader = len(testloader)
     print('Data loaders ready!')
