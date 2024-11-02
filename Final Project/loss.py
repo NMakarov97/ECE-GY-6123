@@ -45,3 +45,15 @@ def ssim(img1, img2, val_range, window_size=11, window=None, size_average=True, 
     v1 = 2.0 * sigma12 + C2
     v2 = sigma1_sq + sigma2_sq + C2
     cs = torch.mean(v1 / v2)
+
+    ssim_map = ((2 * mu1_mu2 + C1) * v1) / ((mu1_sq + mu2_sq + C1) * v2)
+
+    if size_average:
+        ret = ssim_map.mean()
+    else:
+        ret = ssim_map.mean(1).mean(1).mean(1)
+
+    if full:
+        return ret, cs
+    else:
+        return ret
