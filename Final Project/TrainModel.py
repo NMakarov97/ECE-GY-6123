@@ -132,7 +132,7 @@ def main() -> None:
 
     # Set up logging
     writer = SummaryWriter(
-        comment=f'{model_prefix}-learning_rate:{args.lr}-epoch:{args.epochs}-batch_size:{args.batch}'
+        comment=f'{model_prefix}-learning_rate={args.lr}-epoch={args.epochs}-batch_size={args.batch}'
     )
 
     # Loss functions
