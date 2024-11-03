@@ -76,7 +76,7 @@ def init_or_load_model(depthmodel, enc_pretrain:bool, epochs:int, lr:float, ckpt
     if ckpt is not None:
         start_epoch = checkpoint['epoch'] + 1
         if start_epoch <= 0:
-            raise ValueError(f'Epochs provided: {epochs}, epochs completed in checkpoint: {checkpoint['epoch'] + 1}')
+            raise ValueError(f'Epochs provided: {epochs}')
 
     return model, optimizer, start_epoch
 
