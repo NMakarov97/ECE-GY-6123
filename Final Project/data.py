@@ -1,6 +1,7 @@
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms, utils
 import torch
+from torch import Tensor
 from PIL import Image
 import numpy as np
 import random
