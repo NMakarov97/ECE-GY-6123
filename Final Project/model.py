@@ -56,9 +56,9 @@ class Decoder(nn.Module):
         return self.conv3(x_d4)
 
 class DenseDepth(nn.Module):
-    def __init__(self, pretrained:bool=True) -> None:
+    def __init__(self, encoder_pretrained:bool=True) -> None:
         super(DenseDepth, self).__init__()
-        self.encoder = Encoder(pretrained)
+        self.encoder = Encoder(encoder_pretrained)
         self.decoder = Decoder()
 
     def forward(self, x) -> nn.Module:
