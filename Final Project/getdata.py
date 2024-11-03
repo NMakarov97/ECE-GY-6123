@@ -1,7 +1,7 @@
 import os
 import gdown
 
-def download(link: str) -> str:
+def main(link:str='https://drive.google.com/file/d/1S72XYbK045eOAumbUHO5ITK_LvaUw_z6/view?usp=drive_link') -> str:
     '''
     Download the given link and return the final directory
 
@@ -20,3 +20,6 @@ def download(link: str) -> str:
         # Download the file
         gdown.download(link, output=path)
         return path
+
+if __name__ == '__main__':
+    main()
