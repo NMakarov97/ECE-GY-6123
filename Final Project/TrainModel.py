@@ -63,7 +63,7 @@ def main() -> None:
     parser.add_argument(
         '--enc_pretrain',
         '-p',
-        default=True,
+        default=False,
         type=bool,
         help='Use pretrained encoder'
     )
