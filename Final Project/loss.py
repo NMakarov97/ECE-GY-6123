@@ -1,4 +1,5 @@
 import torch
+from torch import Tensor
 import math
 import torch.nn.functional as F
 
