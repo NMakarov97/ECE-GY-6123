@@ -29,12 +29,12 @@ class RandomHorizontalFlip(object):
         return {'image': image, 'depth': depth}
 
 class RandomChannelSwap(object):
-    def __init__(self, probability):
+    def __init__(self, probability:float) -> None:
         from itertools import permutations
         self.probability = probability
         self.indices = list(permutations(range(3), 3))
 
-    def __call__(self, sample):
+    def __call__(self, sample:dict[str, Image.Image]) -> dict[str, Image.Image]:
         image, depth = sample['image'], sample['depth']
 
         if not _is_pil_image(image):
