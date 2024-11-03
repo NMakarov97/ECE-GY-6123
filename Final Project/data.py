@@ -143,7 +143,7 @@ def getNoTransform(is_test:bool=False) -> transforms.Compose:
         ToTensor(is_test=is_test)
     ])
 
-def getDefaultTrainTransform():
+def getDefaultTrainTransform() -> transforms.Compose:
     return transforms.Compose([
         RandomHorizontalFlip(),
         RandomChannelSwap(0.5),
