@@ -69,7 +69,7 @@ def main() -> None:
     )
     parser.add_argument(
         '--data',
-        default='nyu_depth_v2.zip',
+        default=R'Final Project\data\nyu_depth_v2.zip',
         type=str,
         help='path to image dataset'
     )
