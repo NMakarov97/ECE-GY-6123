@@ -232,7 +232,7 @@ def main() -> None:
                 os.path.join(args.save, f'ckpt_{epoch}_{int(losses.avg * 100)}.pth')
             )
 
-def LogProgress(model, writer, test_loader, epoch, device):
+def LogProgress(model, writer, test_loader, epoch, device) -> None:
     # Log intermediate results
     model.eval()
     sequential = test_loader
