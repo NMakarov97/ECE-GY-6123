@@ -48,7 +48,7 @@ class RandomChannelSwap(object):
         
         return {'image': image, 'depth': depth}
 
-def loadZipToMem(zip_file:str):
+def loadZipToMem(zip_file:str) -> tuple[dict[str, bytes], list[list[str]]]:
     from zipfile import ZipFile
     from sklearn.utils import shuffle
     # Load zip file to memory
@@ -68,7 +68,7 @@ def loadZipToMem(zip_file:str):
 
     if nyu2_train:
         print(f'Loaded {len(nyu2_train)}')
-    return data, nyu2_train
+    return data, nyu2_train # type: ignore
 
 class depthDatasetMemory(Dataset):
     def __init__(self, data, nyu2_train, transform=None):
