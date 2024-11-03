@@ -13,7 +13,7 @@ from tensorboardX import SummaryWriter
 from data import getTrainingTestingData
 from model import DenseDepth
 from loss import ssim
-from utils import AverageMeter, DepthNorm, colorize, load_from_checkpoint, init_or_load_model
+from utils import AverageMeter, DepthNorm, colorize, init_or_load_model
 
 def main():
     # Command line arguments
