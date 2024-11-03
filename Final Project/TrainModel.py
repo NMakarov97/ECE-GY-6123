@@ -26,8 +26,8 @@ def main() -> None:
         help='total number of epochs to run for training'
         )
     parser.add_argument(
-        '--learning-rate',
         '--lr',
+        '-l',
         default=0.0001,
         type=float,
         help='initial learning rate'
