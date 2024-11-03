@@ -14,7 +14,7 @@ def _is_numpy_image(img) -> bool:
     return isinstance(img, np.ndarray)
 
 class RandomHorizontalFlip(object):
-    def __call__(self, sample):
+    def __call__(self, sample:dict[str, Image.Image]) -> dict[str, Image.Image]:
         image, depth = sample['image'], sample['depth']
 
         if not _is_pil_image(image):
