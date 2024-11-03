@@ -79,7 +79,7 @@ def init_or_load_model(depthmodel, enc_pretrain:bool, epochs:int, lr:float, ckpt
 
     return model, optimizer, start_epoch
 
-def load_images(image_files):
+def load_images(image_files:list[str]) -> np.ndarray:
     loaded_images = []
     for file in image_files:
         x = np.clip(np.asarray(Image.open(file).resize((640,480)), dtype=float) / 255, 0, 1).transpose(2, 0, 1)
