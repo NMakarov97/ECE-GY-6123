@@ -138,7 +138,7 @@ class ToTensor(object):
         else:
             return img
 
-def getNoTransform(is_test=False):
+def getNoTransform(is_test:bool=False) -> transforms.Compose:
     return transforms.Compose([
         ToTensor(is_test=is_test)
     ])
