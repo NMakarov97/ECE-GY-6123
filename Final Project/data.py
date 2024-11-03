@@ -88,10 +88,10 @@ class depthDatasetMemory(Dataset):
         return len(self.nyu_dataset)
 
 class ToTensor(object):
-    def __init__(self, is_test=False):
+    def __init__(self, is_test:bool=False) -> None:
         self.is_test = is_test
 
-    def __call__(self, sample):
+    def __call__(self, sample:dict[str, Image.Image|np.ndarray]) -> dict[str, Tensor]:
         image, depth = sample['image'], sample['depth']
 
         image = self.to_tensor(image)
@@ -99,14 +99,14 @@ class ToTensor(object):
         depth = depth.resize((320, 240))
 
         if self.is_test:
-            depth = self.to_tensor(depth).float() / 1000
+            depth = self.to_tensor(depth).float() / 1000 # type: ignore
         else:
-            depth = self.to_tensor(depth).float() * 1000
+            depth = self.to_tensor(depth).float() * 1000 # type: ignore
 
         depth = torch.clamp(depth, 10, 1000)
         return {'image': image, 'depth': depth}
 
-    def to_tensor(self, pic):
+    def to_tensor(self, pic:Image.Image|np.ndarray) -> Tensor:
         if not(_is_pil_image(pic) or _is_numpy_image(pic)):
             raise TypeError(
                 f'Picture should be PIL image or numpy array. Got {type(pic)}'
