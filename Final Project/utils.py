@@ -54,7 +54,7 @@ def colorize(value, vmin:float=10, vmax:float=1000, cmap:str='plasma') -> np.nda
 #     optimizer.load_state_dict(checkpoint['optim_state_dict'])
 #     return model, optimizer, ckpt_epoch
 
-def init_or_load_model(depthmodel, enc_pretrain, epochs, lr, ckpt=None, device=torch.device('cuda:0'), loss_meter=None):
+def init_or_load_model(depthmodel, enc_pretrain:bool, epochs:int, lr:float, ckpt:str|None=None, device:torch.device=torch.device('cuda:0'), loss_meter=None) -> tuple[nn.Module, torch.optim.Adam, int]:
     
     if ckpt is not None:
         checkpoint = torch.load(ckpt)
