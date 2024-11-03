@@ -99,6 +99,10 @@ def main() -> None:
     batch_loss = []
     sum_loss = 0
 
+    # Check save directory
+    if not os.path.isdir(args.save):
+        raise NotADirectoryError(f'{args.save} is not a valid directory')
+
     # Load data
     print('Loading data...')
     trainloader, testloader = getTrainingTestingData(args.data, batch_size=batch_size)
