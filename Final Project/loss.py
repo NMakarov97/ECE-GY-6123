@@ -18,7 +18,7 @@ def create_window(window_size:int, channel:int=1) -> Tensor:
     window = _2D_window.expand(channel, 1, window_size, window_size).contiguous()
     return window
 
-def ssim(img1, img2, val_range, window_size=11, window=None, size_average=True, full=False):
+def ssim(img1, img2, val_range, window_size=11, window=None, size_average=True) -> tuple[Tensor, Tensor]:
     L = val_range
     C1 = (0.01)**2
     C2 = (0.03)**2
@@ -54,7 +54,4 @@ def ssim(img1, img2, val_range, window_size=11, window=None, size_average=True, 
     else:
         ret = ssim_map.mean(1).mean(1).mean(1)
 
-    if full:
-        return ret, cs
-    else:
-        return ret
+    return ret, cs
