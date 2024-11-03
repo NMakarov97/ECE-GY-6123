@@ -168,8 +168,9 @@ def main() -> None:
 
             # Compute loss
             l1_loss = l1_criterion(output, normalized_depth)
+            loss_temp, _ = ssim(output, normalized_depth, 1000.0 / 10.0)
             ssim_loss = torch.clamp(
-                (1 - ssim(output, normalized_depth, 1000.0 / 10.0)) * 0.5,
+                (1 - loss_temp) * 0.5,
                 min=0,
                 max=1
             )
