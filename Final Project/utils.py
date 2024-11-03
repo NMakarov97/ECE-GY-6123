@@ -24,7 +24,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
-def colorize(value, vmin=10, vmax=1000, cmap='plasma'):
+def colorize(value, vmin:float=10, vmax:float=1000, cmap:str='plasma') -> np.ndarray:
     value = value.cpu().numpy()[0,:,:]
 
     # normalize
