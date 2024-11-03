@@ -150,7 +150,7 @@ def getDefaultTrainTransform() -> transforms.Compose:
         ToTensor()
     ])
 
-def getTrainingTestingData(path, batch_size):
+def getTrainingTestingData(path: str, batch_size: int) -> tuple[DataLoader, DataLoader]:
     data, nyu2_train = loadZipToMem(path)
     transformed_training = depthDatasetMemory(
         data, nyu2_train, transform=getDefaultTrainTransform()
