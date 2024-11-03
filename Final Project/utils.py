@@ -43,18 +43,16 @@ def colorize(value, vmin:float=10, vmax:float=1000, cmap:str='plasma') -> np.nda
 
     return img.transpose((2,0,1))
 
-def load_from_checkpoint(ckpt, model, optimizer, epochs, loss_meter=None):
-    checkpoint = torch.load(ckpt)
-    ckpt_epoch = epochs - (checkpoint['epoch'] + 1)
-    if ckpt_epoch <= 0:
-        raise ValueError(
-            f'Epochs provided: {epochs}, epochs completed in checkpoint: {checkpoint['epoch'] + 1}'
-        )
-    
-    model.load_state_dict(checkpoint['model_state_dict'])
-    optimizer.load_state_dict(checkpoint['optim_state_dict'])
-
-    return model, optimizer, ckpt_epoch
+# def load_from_checkpoint(ckpt, model, optimizer, epochs, loss_meter=None):
+#     checkpoint = torch.load(ckpt)
+#     ckpt_epoch = epochs - (checkpoint['epoch'] + 1)
+#     if ckpt_epoch <= 0:
+#         raise ValueError(
+#             f'Epochs provided: {epochs}, epochs completed in checkpoint: {checkpoint['epoch'] + 1}'
+#         )
+#     model.load_state_dict(checkpoint['model_state_dict'])
+#     optimizer.load_state_dict(checkpoint['optim_state_dict'])
+#     return model, optimizer, ckpt_epoch
 
 def init_or_load_model(depthmodel, enc_pretrain, epochs, lr, ckpt=None, device=torch.device('cuda:0'), loss_meter=None):
     
