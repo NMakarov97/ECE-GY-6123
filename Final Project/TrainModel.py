@@ -15,7 +15,7 @@ from model import DenseDepth
 from loss import ssim
 from utils import AverageMeter, DepthNorm, colorize, init_or_load_model
 
-def main():
+def main() -> None:
     # Command line arguments
     parser = argparse.ArgumentParser(description='High Quality Monocular Depth Estimation via Transfer Learning')
     parser.add_argument(
