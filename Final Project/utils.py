@@ -4,8 +4,9 @@ import torch
 import torch.nn as nn
 import numpy as np
 from PIL import Image
+from torch import Tensor
 
-def DepthNorm(depth:float, maxDepth:float=1000.0) -> float:
+def DepthNorm(depth:Tensor, maxDepth:float=1000.0) -> Tensor:
     return maxDepth / depth
 
 class AverageMeter(object):
