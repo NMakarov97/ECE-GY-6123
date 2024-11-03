@@ -71,11 +71,11 @@ def loadZipToMem(zip_file:str) -> tuple[dict[str, bytes], list[list[str]]]:
     return data, nyu2_train # type: ignore
 
 class depthDatasetMemory(Dataset):
-    def __init__(self, data, nyu2_train, transform=None):
+    def __init__(self, data:dict[str, bytes], nyu2_train:list[list[str]], transform:transforms.Compose|None=None) -> None:
         self.data, self.nyu_dataset = data, nyu2_train
         self.transform = transform
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx:int) -> dict[str, Image.Image]:
         sample = self.nyu_dataset[idx]
         image = Image.open(BytesIO(self.data[sample[0]]))
         depth = Image.open(BytesIO(self.data[sample[1]]))
@@ -84,7 +84,7 @@ class depthDatasetMemory(Dataset):
             sample = self.transform(sample)
         return sample
     
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.nyu_dataset)
 
 class ToTensor(object):
