@@ -23,8 +23,8 @@ class RandomHorizontalFlip(object):
             raise TypeError(f'Image should be PIL type. Got {type(depth)}')
 
         if random.random() < 0.5:
-            image = image.transpose(Image.FLIP_LEFT_RIGHT)
-            depth = depth.transpose(Image.FLIP_LEFT_RIGHT)
+            image = image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+            depth = depth.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
 
         return {'image': image, 'depth': depth}
 
