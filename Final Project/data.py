@@ -80,8 +80,7 @@ class depthDatasetMemory(Dataset):
         image = Image.open(BytesIO(self.data[sample[0]]))
         depth = Image.open(BytesIO(self.data[sample[1]]))
         sample = {'image': image, 'depth': depth}
-        if self.transform:
-            sample = self.transform(sample)
+        sample = self.transform(sample)
         return sample
     
     def __len__(self) -> int:
