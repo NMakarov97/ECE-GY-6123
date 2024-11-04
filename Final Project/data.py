@@ -71,7 +71,7 @@ def loadZipToMem(zip_file:str) -> tuple[dict[str, bytes], list[list[str]]]:
     return data, nyu2_train # type: ignore
 
 class depthDatasetMemory(Dataset):
-    def __init__(self, data:dict[str, bytes], nyu2_train:list[list[str]], transform:transforms.Compose|None=None) -> None:
+    def __init__(self, data:dict[str, bytes], nyu2_train:list[list[str]], transform:transforms.Compose) -> None:
         self.data, self.nyu_dataset = data, nyu2_train
         self.transform = transform
 
