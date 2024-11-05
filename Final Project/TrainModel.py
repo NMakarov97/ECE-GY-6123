@@ -85,11 +85,6 @@ def main() -> None:
     # Set up various constants
     model_prefix = 'DenseDepth_'
     device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
-    theta = args.theta
-    save_count = 0
-    epoch_loss = []
-    batch_loss = []
-    sum_loss = 0
 
     # Check save directory
     if not os.path.isdir(args.save):
