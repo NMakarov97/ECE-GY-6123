@@ -103,7 +103,7 @@ def main() -> None:
     if not os.path.isdir(args.save):
         raise NotADirectoryError(f'{args.save} is not a valid directory')
     # Write a test file to ensure permissions
-    open(os.path.join(args.save, 'test.txt'), 'a').close()
+    # open(os.path.join(args.save, 'test.txt'), 'a').close()
 
     # Load data
     print('Loading data...')
