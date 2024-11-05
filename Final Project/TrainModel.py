@@ -80,6 +80,13 @@ def main() -> None:
         type=str,
         help='directory to save checkpoints in'
     )
+    parser.add_argument(
+        '--model',
+        '-m',
+        default='DenseDepth',
+        type=str,
+        help='name of model to train'
+    )
     args = parser.parse_args()
 
     # Set up various constants
