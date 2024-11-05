@@ -44,7 +44,7 @@ def main() -> None:
         '-c',
         default='',
         type=str,
-        help='path to last saved checkpoint to resume training'
+        help='directory or path to last saved checkpoint to resume training'
         )
     parser.add_argument(
         '--resume_epoch',
