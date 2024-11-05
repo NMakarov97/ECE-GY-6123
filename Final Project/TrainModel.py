@@ -83,7 +83,6 @@ def main() -> None:
     args = parser.parse_args()
 
     # Set up various constants
-    batch_size = args.batch
     model_prefix = 'DenseDepth_'
     device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
     theta = args.theta
