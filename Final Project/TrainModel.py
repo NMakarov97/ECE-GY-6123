@@ -23,7 +23,7 @@ def main() -> None:
         '-e',
         default=5,
         type=int,
-        help='total number of epochs to run for training'
+        help='number of epochs to run for training'
         )
     parser.add_argument(
         '--lr',
