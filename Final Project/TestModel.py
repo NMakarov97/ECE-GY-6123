@@ -16,6 +16,12 @@ def main() -> None:
         type=str,
         help='device to run testing with'
     )
+    parser.add_argument(
+        '--data',
+        default=R'Final Project\testing',
+        type=str,
+        help='path to image dataset'
+    )
 
 if __name__ == '__main__':
     main()
