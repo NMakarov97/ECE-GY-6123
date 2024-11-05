@@ -3,6 +3,9 @@ from os import path, listdir
 
 import torch
 
+from model import DenseDepth
+from utils import init_or_load_model
+
 def main() -> None:
     # Command line arguments
     parser = argparse.ArgumentParser(description='Monocular Depth Estimation Testing')
@@ -43,6 +46,20 @@ def main() -> None:
     # Load data
     print('Loading data...')
     images = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '.png' in f]
+    print(f'Loaded {len(images)} images')
+
+    # Load model from checkpoint for testing
+    print('Loading from checkpoint...')
+    model, _, _ = init_or_load_model(
+        depthmodel=DenseDepth,
+        enc_pretrain=False,
+        epochs=0,
+        lr=0.001,
+        ckpt=args.checkpoint,
+        device=device
+    )
+    model.eval()
+    print('Model loaded from checkpoint!')
 
 if __name__ == '__main__':
     main()
