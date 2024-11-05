@@ -75,6 +75,7 @@ def main() -> None:
 
         output = colorize(prediction.data, cmap=args.colorbar)
         output = output.transpose((1, 2, 0))
+        output = cv2.resize(output, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
         cv2.imwrite(image_paths[i].replace('_colors', '_depth'), output)
 
 if __name__ == '__main__':
