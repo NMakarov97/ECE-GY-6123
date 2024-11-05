@@ -17,7 +17,7 @@ from utils import AverageMeter, DepthNorm, colorize, init_or_load_model
 
 def main() -> None:
     # Command line arguments
-    parser = argparse.ArgumentParser(description='High Quality Monocular Depth Estimation via Transfer Learning')
+    parser = argparse.ArgumentParser(description='Monocular Depth Estimation')
     parser.add_argument(
         '--epochs',
         '-e',
