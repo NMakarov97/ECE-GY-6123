@@ -9,6 +9,13 @@ def main() -> None:
         type=str,
         help='path to checkpoint'
     )
+    parser.add_argument(
+        '--device',
+        '-d',
+        default='cuda',
+        type=str,
+        help='device to run testing with'
+    )
 
 if __name__ == '__main__':
     main()
