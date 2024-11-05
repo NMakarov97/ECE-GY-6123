@@ -47,7 +47,6 @@ def main() -> None:
     # Load data
     print('Loading data...')
     image_paths = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '.png' in f]
-    images = load_images(image_paths)
     print(f'Loaded {len(image_paths)} images')
 
     # Load model from checkpoint for testing
@@ -66,7 +65,8 @@ def main() -> None:
     # Start testing
     print('Starting testing...')
 
-    for i, image in enumerate(images):
+    for i, image_path in enumerate(image_paths):
+        image = load_images([image_path])
         image = torch.Tensor(image).float().to(device)
         print(f'Processing {image_paths[i]}')
 
