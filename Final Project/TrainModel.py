@@ -90,7 +90,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # Set up various constants
-    model_prefix = 'DenseDepth_'
+    prefix = args.model.strip() + '_'
     device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
 
     # Check save directory
@@ -132,7 +132,7 @@ def main() -> None:
 
     # Set up logging
     writer = SummaryWriter(
-        comment=f'{model_prefix}-learning_rate={args.lr}-epoch={args.epochs}-batch_size={args.batch}'
+        comment=f'{prefix}-learning_rate={args.lr}-epoch={args.epochs}-batch_size={args.batch}'
     )
 
     # Loss functions
