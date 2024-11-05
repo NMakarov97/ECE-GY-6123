@@ -58,7 +58,7 @@ def main() -> None:
         '-p',
         default=False,
         type=bool,
-        help='Use pretrained encoder'
+        help='use pretrained encoder'
     )
     parser.add_argument(
         '--data',
