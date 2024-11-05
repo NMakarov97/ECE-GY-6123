@@ -75,8 +75,7 @@ def main() -> None:
 
         output = colorize(prediction.data, cmap=args.colorbar)
         output = output.transpose((1, 2, 0))
-        base, ext = path.splitext(image_paths[i])
-        cv2.imwrite(base + '_output' + ext, output)
+        cv2.imwrite(image_paths[i].replace('_colors', '_depth'), output)
 
 if __name__ == '__main__':
     main()
