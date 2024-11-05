@@ -78,7 +78,7 @@ def main() -> None:
         '-s',
         default='',
         type=str,
-        help='location to save checkpoints in'
+        help='directory to save checkpoints in'
     )
     args = parser.parse_args()
 
