@@ -46,7 +46,7 @@ def main() -> None:
 
     # Load data
     print('Loading data...')
-    image_paths = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '.png' in f]
+    image_paths = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '_colors.png' in f]
     print(f'Loaded {len(image_paths)} images')
 
     # Load model from checkpoint for testing
