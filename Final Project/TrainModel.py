@@ -21,7 +21,7 @@ def main() -> None:
     parser.add_argument(
         '--epochs',
         '-e',
-        default=20,
+        default=5,
         type=int,
         help='total number of epochs to run for training'
         )
