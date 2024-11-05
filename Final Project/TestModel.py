@@ -1,6 +1,8 @@
 import argparse
 import os
 
+import torch
+
 def main() -> None:
     # Command line arguments
     parser = argparse.ArgumentParser(description='Monocular Depth Estimation Testing')
@@ -30,6 +32,9 @@ def main() -> None:
         help='color scheme to use for the results'
     )
     args = parser.parse_args()
+
+    # Set up various constants
+    device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
 
     # Check checkpoint file
     if not os.path.isfile(args.checkpoint):
