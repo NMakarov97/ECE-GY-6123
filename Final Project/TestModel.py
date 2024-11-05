@@ -1,4 +1,5 @@
 import argparse
+import os
 
 def main() -> None:
     # Command line arguments
@@ -28,6 +29,11 @@ def main() -> None:
         type=str,
         help='color scheme to use for the results'
     )
+    args = parser.parse_args()
+
+    # Check checkpoint file
+    if not os.path.isfile(args.checkpoint):
+        raise NotADirectoryError(f'{args.checkpoint} is not a valid checkpoint file')
 
 if __name__ == '__main__':
     main()
