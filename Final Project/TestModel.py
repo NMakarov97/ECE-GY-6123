@@ -1,10 +1,11 @@
 import argparse
 from os import path, listdir
+import cv2
 
 import torch
 
 from model import DenseDepth
-from utils import init_or_load_model
+from utils import colorize, DepthNorm, load_images, init_or_load_model
 
 def main() -> None:
     # Command line arguments
@@ -45,8 +46,9 @@ def main() -> None:
 
     # Load data
     print('Loading data...')
-    images = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '.png' in f]
-    print(f'Loaded {len(images)} images')
+    image_paths = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '.png' in f]
+    images = load_images(image_paths)
+    print(f'Loaded {len(image_paths)} images')
 
     # Load model from checkpoint for testing
     print('Loading from checkpoint...')
@@ -60,6 +62,21 @@ def main() -> None:
     )
     model.eval()
     print('Model loaded from checkpoint!')
+
+    # Start testing
+    print('Starting testing...')
+
+    for i, image in enumerate(images):
+        image = torch.Tensor(image).float().to(device)
+        print(f'Processing {image_paths[i]}')
+
+        with torch.no_grad():
+            prediction = DepthNorm(model(image).squeeze(0))
+
+        output = colorize(prediction.data, cmap=args.colorbar)
+        output = output.transpose((1, 2, 0))
+        base, ext = path.splitext(image_paths[i])
+        cv2.imwrite(base + '_output' + ext, output)
 
 if __name__ == '__main__':
     main()
