@@ -22,6 +22,12 @@ def main() -> None:
         type=str,
         help='path to image dataset'
     )
+    parser.add_argument(
+        '--colorbar',
+        default='plasma',
+        type=str,
+        help='color scheme to use for the results'
+    )
 
 if __name__ == '__main__':
     main()
