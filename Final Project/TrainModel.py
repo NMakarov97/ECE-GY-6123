@@ -100,7 +100,7 @@ def main() -> None:
 
     # Load data
     print('Loading data...')
-    trainloader, testloader = getTrainingTestingData(args.data, batch_size=batch_size)
+    trainloader, testloader = getTrainingTestingData(args.data, batch_size=args.batch)
     num_trainloader = len(trainloader)
     num_testloader = len(testloader)
     print('Data loaders ready!')
