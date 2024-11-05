@@ -47,13 +47,6 @@ def main() -> None:
         help='directory or path to last saved checkpoint to resume training'
         )
     parser.add_argument(
-        '--resume_epoch',
-        '-r',
-        default=-1,
-        type=int,
-        help='epoch to resume training'
-    )
-    parser.add_argument(
         '--device',
         '-d',
         default='cuda',
