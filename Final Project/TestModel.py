@@ -1,5 +1,5 @@
 import argparse
-import os
+from os import path, listdir
 
 import torch
 
@@ -37,8 +37,12 @@ def main() -> None:
     device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
 
     # Check checkpoint file
-    if not os.path.isfile(args.checkpoint):
+    if not path.isfile(args.checkpoint):
         raise NotADirectoryError(f'{args.checkpoint} is not a valid checkpoint file')
+
+    # Load data
+    print('Loading data...')
+    images = [path.join(args.data, f) for f in listdir(args.data) if path.isfile(path.join(args.data, f)) and '.png' in f]
 
 if __name__ == '__main__':
     main()
