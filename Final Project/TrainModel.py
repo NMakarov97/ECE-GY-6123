@@ -142,7 +142,7 @@ def main() -> None:
     print(f'Device: {device}')
     print('Starting training...')
 
-    for epoch in range(start_epoch, args.epochs):
+    for epoch in range(start_epoch, start_epoch + args.epochs):
         # Set up averaging
         batch_time = AverageMeter()
         losses = AverageMeter()
