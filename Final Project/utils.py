@@ -5,7 +5,6 @@ import torch.nn as nn
 import numpy as np
 from PIL import Image
 from torch import Tensor
-from os import listdir, path
 
 def DepthNorm(depth:Tensor, maxDepth:float=1000.0) -> Tensor:
     return maxDepth / depth
@@ -59,8 +58,7 @@ def colorize(value, vmin:float=10, vmax:float=1000, cmap:str='plasma') -> np.nda
 def init_or_load_model(depthmodel, enc_pretrain:bool, epochs:int, lr:float, ckpt:str|None=None, device:torch.device=torch.device('cuda:0'), loss_meter=None) -> tuple[nn.Module, torch.optim.Adam, int]:
     
     if ckpt is not None:
-        files = sorted(listdir(ckpt))
-        checkpoint = torch.load(path.join(ckpt,files[-1]))
+        checkpoint = torch.load(ckpt)
     
     model = depthmodel(encoder_pretrained=enc_pretrain)
 
