@@ -75,13 +75,16 @@ class ToTensor(object):
         image, depth = sample['image'], sample['depth']
 
         image = self.to_tensor(image)
-
         depth = depth.resize((320, 240))
 
+        if not(isinstance(depth, Image.Image) or isinstance(depth, np.ndarray)):
+            raise TypeError(
+                f'Picture should be PIL image or numpy array. Got {type(depth)}'
+            )
         if self.is_test:
-            depth = self.to_tensor(depth).float() / 1000 # type: ignore
+            depth = self.to_tensor(depth).float() / 1000
         else:
-            depth = self.to_tensor(depth).float() * 1000 # type: ignore
+            depth = self.to_tensor(depth).float() * 1000
 
         depth = torch.clamp(depth, 10, 1000)
         return {'image': image, 'depth': depth}
