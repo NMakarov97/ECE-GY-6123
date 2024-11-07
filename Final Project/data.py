@@ -56,7 +56,7 @@ class depthDatasetMemory(Dataset):
     def __init__(self, data:dict[str, bytes], nyu2_train:list[list[str]], transform:transforms.Compose) -> None:
         self.data, self.nyu_dataset, self.transform = data, nyu2_train, transform
 
-    def __getitem__(self, idx:int) -> dict[str, Image.Image]:
+    def __getitem__(self, idx:int) -> dict[str, Image.ImageFile.ImageFile]:
         sample = self.nyu_dataset[idx]
         image = Image.open(BytesIO(self.data[sample[0]]))
         depth = Image.open(BytesIO(self.data[sample[1]]))
