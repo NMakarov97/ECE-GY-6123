@@ -217,7 +217,7 @@ def main() -> None:
                     'optim_state_dict': optimizer.state_dict(),
                     'loss': losses.avg
                 },
-                os.path.join(args.save, f'ckpt_{epoch}_{int(losses.avg * 100)}.pth')
+                os.path.join(args.save, f'{prefix}ckpt_{epoch}_{int(losses.avg * 100)}.pth')
             )
             LogProgress(model, writer, testloader, num_iters, device)
             writer.add_scalar('Train/Loss.avg', losses.avg, epoch)
@@ -230,7 +230,7 @@ def main() -> None:
                     'optim_state_dict': optimizer.state_dict(),
                     'loss': losses.avg
                 },
-                os.path.join(args.save, f'ckpt_{epoch}_{int(losses.avg * 100)}.pth')
+                os.path.join(args.save, f'{prefix}cpu_ckpt_{epoch}_{int(losses.avg * 100)}.pth')
             )
 
 def LogProgress(model, writer, test_loader, epoch, device) -> None:
