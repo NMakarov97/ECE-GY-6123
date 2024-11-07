@@ -49,9 +49,7 @@ def loadZipToMem(zip_file:str) -> tuple[dict[str, bytes], list[list[str]]]:
     )
 
     nyu2_train = shuffle(nyu2_train, random_state=0)
-
-    if nyu2_train:
-        print(f'Loaded {len(nyu2_train)}')
+    print(f'Loaded {len(nyu2_train)}') # type: ignore
     return data, nyu2_train # type: ignore
 
 class depthDatasetMemory(Dataset):
