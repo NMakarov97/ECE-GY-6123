@@ -26,13 +26,10 @@ class RandomChannelSwap(object):
     def __call__(self, sample:dict[str, Image.Image]) -> dict[str, Image.Image]:
         image, depth = sample['image'], sample['depth']
 
-        if not isinstance(image, Image.Image) or not isinstance(depth, Image.Image):
-            raise TypeError(f'Images should be PIL type. Got {type(image)} and {type(depth)}')
-        
         if random.random() < self.probability:
             image = np.asarray(image)
             image = Image.fromarray(image[...,list(self.indices[random.randint(0, len(self.indices) -1)])])
-        
+
         return {'image': image, 'depth': depth}
 
 def loadZipToMem(zip_file:str) -> tuple[dict[str, bytes], list[list[str]]]:
