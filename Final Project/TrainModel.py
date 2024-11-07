@@ -1,7 +1,7 @@
 import argparse
 import time
 import datetime
-import os.path
+from os import path, listdir
 
 import torch
 import torch.nn as nn
@@ -94,7 +94,7 @@ def main() -> None:
     device = torch.device('cuda:0' if args.device == 'cuda' else 'cpu')
 
     # Check save directory
-    if not os.path.isdir(args.save):
+    if not path.isdir(args.save):
         raise NotADirectoryError(f'{args.save} is not a valid directory')
     # Write a test file to ensure permissions
     # open(os.path.join(args.save, 'test.txt'), 'a').close()
@@ -107,14 +107,18 @@ def main() -> None:
     print('Data loaders ready!')
 
     # Load from checkpoint if given
-    if len(args.checkpoint) > 0:
+    if path.isfile(args.checkpoint):
+        ckpt = args.checkpoint
+    elif path.isdir(args.checkpoint):
+        ckpt = sorted([f for f in listdir(args.checkpoint) if prefix in f])[-1]
+    if ckpt:
         print('Loading from checkpoint...')
         model, optimizer, start_epoch = init_or_load_model(
             depthmodel=DenseDepth,
             enc_pretrain=args.enc_pretrain,
             epochs=args.epochs,
             lr=args.lr,
-            ckpt=args.checkpoint,
+            ckpt=ckpt,
             device=device
         )
         print(f'Resuming from epoch #{start_epoch}')
@@ -217,7 +221,7 @@ def main() -> None:
                     'optim_state_dict': optimizer.state_dict(),
                     'loss': losses.avg
                 },
-                os.path.join(args.save, f'{prefix}ckpt_{epoch}_{int(losses.avg * 100)}.pth')
+                path.join(args.save, f'{prefix}ckpt_{epoch}_{int(losses.avg * 100)}.pth')
             )
             LogProgress(model, writer, testloader, num_iters, device)
             writer.add_scalar('Train/Loss.avg', losses.avg, epoch)
@@ -230,7 +234,7 @@ def main() -> None:
                     'optim_state_dict': optimizer.state_dict(),
                     'loss': losses.avg
                 },
-                os.path.join(args.save, f'{prefix}cpu_ckpt_{epoch}_{int(losses.avg * 100)}.pth')
+                path.join(args.save, f'{prefix}cpu_ckpt_{epoch}_{int(losses.avg * 100)}.pth')
             )
 
 def LogProgress(model, writer, test_loader, epoch, device) -> None:
