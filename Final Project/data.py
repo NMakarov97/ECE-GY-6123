@@ -7,20 +7,12 @@ import numpy as np
 import random
 from io import BytesIO
 
-def _is_pil_image(img) -> bool:
-    return isinstance(img, Image.Image)
-
-def _is_numpy_image(img) -> bool:
-    return isinstance(img, np.ndarray)
-
 class RandomHorizontalFlip(object):
     def __call__(self, sample:dict[str, Image.Image]) -> dict[str, Image.Image]:
         image, depth = sample['image'], sample['depth']
 
-        if not _is_pil_image(image):
-            raise TypeError(f'Image should be PIL type. Got {type(image)}')
-        if not _is_pil_image(depth):
-            raise TypeError(f'Image should be PIL type. Got {type(depth)}')
+        if not isinstance(image, Image.Image) or not isinstance(depth, Image.Image):
+            raise TypeError(f'Images should be PIL type. Got {type(image)} and {type(depth)}')
 
         if random.random() < 0.5:
             image = image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
@@ -37,10 +29,8 @@ class RandomChannelSwap(object):
     def __call__(self, sample:dict[str, Image.Image]) -> dict[str, Image.Image]:
         image, depth = sample['image'], sample['depth']
 
-        if not _is_pil_image(image):
-            raise TypeError(f'Image should be PIL type. Got {type(image)}')
-        if not _is_pil_image(depth):
-            raise TypeError(f'Image should be PIL type. Got {type(depth)}')
+        if not isinstance(image, Image.Image) or not isinstance(depth, Image.Image):
+            raise TypeError(f'Images should be PIL type. Got {type(image)} and {type(depth)}')
         
         if random.random() < self.probability:
             image = np.asarray(image)
@@ -106,7 +96,7 @@ class ToTensor(object):
         return {'image': image, 'depth': depth}
 
     def to_tensor(self, pic:Image.Image|np.ndarray) -> Tensor:
-        if not(_is_pil_image(pic) or _is_numpy_image(pic)):
+        if not(isinstance(pic, Image.Image) or isinstance(pic, np.ndarray)):
             raise TypeError(
                 f'Picture should be PIL image or numpy array. Got {type(pic)}'
             )
