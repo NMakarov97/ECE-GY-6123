@@ -89,7 +89,8 @@ class ToTensor(object):
         depth = torch.clamp(depth, 10, 1000)
         return {'image': image, 'depth': depth}
 
-    def to_tensor(self, pic:Image.Image|np.ndarray) -> Tensor:        
+    def to_tensor(self, pic:Image.Image|np.ndarray) -> Tensor:
+        # Case for numpy array
         if isinstance(pic, np.ndarray):
             img = torch.from_numpy(pic.transpose((2, 0, 1)))
             return img.float().div(255)
