@@ -11,9 +11,6 @@ class RandomHorizontalFlip(object):
     def __call__(self, sample:dict[str, Image.Image]) -> dict[str, Image.Image]:
         image, depth = sample['image'], sample['depth']
 
-        if not isinstance(image, Image.Image) or not isinstance(depth, Image.Image):
-            raise TypeError(f'Images should be PIL type. Got {type(image)} and {type(depth)}')
-
         if random.random() < 0.5:
             image = image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
             depth = depth.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
